@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>gSchool email client - REACT.js Version</title>
+    <title>gSchool email client - jQuery.js Version</title>
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
@@ -10,23 +10,40 @@
     </script>
   </head>
   <body>
+    <!-- code for add new label modal -->
+    <div class="modal fade new-label-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <label>Enter New Label
+            <input type="text" name="new-label" value="">
+        </label>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary modal-save">Save changes</button>
+      </div>
+    </div>
+  </div>
+  <!-- endn modal -->
     <div class="container">
       <div class="row">
         <div class="col-sm-12">
           <h1 class="text-center">Email Client</h1>
         </div>
       </div>
+      <!-- buttons -->
       <div class="row">
         <div class="col-sm-11 col-sm-offest-1">
-        <button class="btn btn-default"><i class="fa fa-square-o fa-lg"></i></button>
-        <button class="btn dropdown-toggle btn-default" disabled>Mark As Read</button>
-        <button class="btn dropdown-toggle btn-default" disabled>Mark As Unread</button>
-        <button class="btn dropdown-toggle btn-default" data-toggle="dropdown" disabled>
+        <button class="btn btn-default multiSelect"><i class="fa fa-square-o fa-lg"></i></button>
+        <button class="btn dropdown-toggle btn-default db mar" disabled>Mark As Read</button>
+        <button class="btn dropdown-toggle btn-default db mau" disabled>Mark As Unread</button>
+        <betton class="btn dropdown-toggle btn-default db delete-email" disable>Delete</button>
+        <button class="btn dropdown-toggle btn-default db add-label" data-toggle="dropdown" disabled>
             Add Label
             <span class="caret"></span>
         </button>
         <ul class="dropdown-menu">
-            <!-- dropdown menu links -->
+          <li><a href="#" class="menu-add" data-toggle="modal" data-target=".new-label-modal">New Label</a></li><!-- dropdown menu links -->
         </ul>
 
         <button class="btn dropdown-toggle btn-default" data-toggle="dropdown" disabled>
@@ -38,15 +55,18 @@
         </ul>
       </div>
     </div>
-    <div class="row email-row email-selected first-row">
-      <div class="col-sm-1 Inner">
+    <!-- end buttons -->
+    <!-- email list -->
+    <div class="first-row">
+    <div class="row email-row email-selected">
+      <div class="col-sm-1">
         <p>
         <input type="checkbox" name="message-0" chcecked>
         <i class="fa fa-star-o fa-lg"></i>
         </p>
       </div>
-      <div class="col-sm-11">
-        <p><span class="email-label">label</span>This is the title of an email</p>
+      <div class="col-sm-11 email-subject">
+        <p><span class="email-label">label</span><span class="subject">This is the title of an email<span></p>
       </div>
 
     </div>
@@ -63,11 +83,11 @@
 
     </div>
   </div>
+  <!-- end email list -->
+</div>
 
-    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"</script>
     <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
   </body>
 </html>
-<head>
-
-</head>

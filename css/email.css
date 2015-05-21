@@ -1,7 +1,9 @@
-.email-selected {background-color: #EFEFEF;}
 .email-label {background-color: #EBAF48;padding-left: 7px; padding-right: 7px; margin-right: 10px;}
 .email-row {
    min-height: 35px;   /* Set to height you need */
 }
 .email-row p {margin-top: 7px;}
 .first-row {margin-top: 10px;}
+.menu-add {border-top:2px;}
+.selected {background-color: #FFFCCA;}
+.unread {background-color: #EFEFEF;}
