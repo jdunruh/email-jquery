@@ -144,10 +144,10 @@ var addLabelToMenu = function() {
 $(document).ready(function() {
   alert("the document is ready");
   $("checkbox").click(selectEmailClick);
-  $(".subject").click(setRead());
-  $(".mar").click(markAsRead());
-  $(".mar").click(markAsUnRead());
-  $(".deleteEmail").click(deleteEmail());
-  $(".multiSelect").click(multiSelectStateChange());
-  $(".modal-save").click(addLabelToMenu());
+  $(".subject").click(markAsRead);
+$(".mar").click(markAsRead);
+  $(".mar").click(markAsUnRead);
+  $(".deleteEmail").click(deleteEmail);
+  $(".multiSelect").click(multiSelectStateChange);
+  $(".modal-save").click(addLabelToMenu);
 });
