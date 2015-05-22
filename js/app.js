@@ -15,6 +15,7 @@ var newEmail = function(index, subject) {
   return emailHtml;
 }
 
+
 var addEmail = function(index, subject) { // adds email at end of the email reader section
   $(".first-row").append(newEmail(index, subject));
 }
@@ -30,8 +31,8 @@ var setRead = function(email) {
   email.removeClass("unread");
 }
 
-var processCheckedEmail = function(setFunc) {
-  $('.email-row input [type="checkbox"]').attr("checked").foreach(setFunc(el));
+var processCheckedEmail = function(setFunc) { // find checked email and run setFunc ov each
+  $('.email-row input [type="checkbox"]').attr("checked").each(setFunc);
 }
 
 var markAsRead = function() {
@@ -83,31 +84,36 @@ var removeLabel = function(email, labelText) {
   processCheckedEmail(function(el) {removeLabelFromEmail(labelText, el)});
 }
 
+var selectEmail = function(email) {
+  email.addClass("selected");
+  email.find(":checkbox").addAttr("checked", true);
+}
+
 var selectAllEmails = function() {
-  $('.email-row input [type="checkbox"]').forEach(function(element) {
-    element.attr("checked", true);
-  });
+  $('.email-row :checkbox').attr("checked", true);
+  $('.email-row').addClass("selected");
 }
 
 var unSelectAllEmails = function() {
-  $('.email-row input [type="checkbox"]').forEach(function(element) {
-    element.removeAttr("checked");
-  });
+  $('.email-row :checkbox').removeAttr("checked");
+  $('.email-row').removeClass("selected");
 }
 
 var multiSelectStateChange = function() {
-  if ($(this).hasClass("fa-square-o")) {
-    $(this).removeClass("fa-square-o");
-    $(this).addClass("fa-check-square-o");
+  alert("in multiselect state change")
+  var icon = $(this).find("i");
+  if (icon.hasClass("fa-square-o")) {
+    icon.removeClass("fa-square-o");
+    icon.addClass("fa-check-square-o");
     selectAllEmails();
   } else {
-    if ($(this).hasClass("fa-checked-o")) {
-      $(this).removeClass("fa-check-squore-o");
-      $(this).addClass("fa-square-o");
+    if (icon.hasClass("fa-check-square-o")) {
+      icon.removeClass("fa-check-square-o");
+      icon.addClass("fa-square-o");
       unSelectAllEmails();
     } else {
-      $(this).removeClass("fa-minus-square-o");
-      $(this).addClass("fa-check-square-o");
+      icon.removeClass("fa-minus-square-o");
+      icon.addClass("fa-check-square-o");
       selectAllEmails();
     }
   }
@@ -122,12 +128,12 @@ var disableButtons = function() {
 }
 
 var selectEmailClick = function() {
-  if ($('.email-row input [type="checkbox"]').attr("checked").length === 0) {
+  if ($('.email-row :checked').length === 0) {
     disableButtons();
   } else {
     enableButtons();
   }
-  $(this).parentsUnitl(".email-row").parent().toggleClass(".selected");
+  $(this).closest(".email-row").toggleClass("selected");
 }
 
 var insertLabelMenu = function(val) {
@@ -142,10 +148,9 @@ var addLabelToMenu = function() {
 }
 
 $(document).ready(function() {
-  alert("the document is ready");
-  $("checkbox").click(selectEmailClick);
+  $(':checkbox').click(selectEmailClick);
   $(".subject").click(markAsRead);
-$(".mar").click(markAsRead);
+  $(".mar").click(markAsRead);
   $(".mar").click(markAsUnRead);
   $(".deleteEmail").click(deleteEmail);
   $(".multiSelect").click(multiSelectStateChange);
