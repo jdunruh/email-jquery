@@ -15,23 +15,23 @@ var newEmail = function(index, subject) {
   return emailHtml;
 }
 
-var addEmail(index, subject) { // adds email at end of the email reader section
+var addEmail = function(index, subject) { // adds email at end of the email reader section
   $(".first-row").append(newEmail(index, subject));
 }
 
-var addEmails(emailArray) { // add array of email objects
+var addEmails = function(emailArray) { // add array of email objects
   emailArray.forEach(function(el) {
     addEmail(el.index, el.subject);
   })
 }
 
-var setRead = function(eamil) {
+var setRead = function(email) {
   email.wrapInner("<strong></strong");
   email.removeClass("unread");
 }
 
 var processCheckedEmail = function(setFunc) {
-  $(.email-row input [type="checkbox"]).attr("checked").foreach(setFunc(el));
+  $('.email-row input [type="checkbox"]').attr("checked").foreach(setFunc(el));
 }
 
 var markAsRead = function() {
@@ -42,8 +42,8 @@ var markAsUnRead = function() {
   processCheckedEmail(setUnRead());
 }
 
-var deleteEmail(el) {
-  $(.email-row input [type="checkbox"]).attr("checked").parentsUntil(".email-row").parent().remove();
+var deleteEmail = function(el) {
+  $('.email-row input [type="checkbox"]').attr("checked").parentsUntil(".email-row").parent().remove();
 }
 
 
@@ -51,11 +51,12 @@ var setUnRead = function(email) {
   email.unwrop();
   email.addClass("unread");
 }
-var removeCheckedEmails() {
+
+var removeCheckedEmails = function() {
   $(".first-row input :checked").parentsUntil(".first-row").remove();
 }
 var toggleStar = function(el) {
-  if el.hasClass("fa-star-o") {
+  if (el.hasClass("fa-star-o")) {
     el.removeClass("fa-star-o");
     el.addClass("fa-star");
   } else {
@@ -68,8 +69,10 @@ var addLabelToEmail= function(labelText, email) {
   email.parent().next().prepend('<span class="email-label">' + labelText + '</span>');
 }
 
-var addLabel = function(email labelText) {
-  processCheckedEmail(function(el) {addLabelToEmail(labelText, el);}
+var addLabel = function(email, labelText) {
+  processCheckedEmail(function(el) {
+    addLabelToEmail(labelText, el);
+  });
 }
 
 var removeLabelFromEmail = function(labelText, email) {
@@ -81,24 +84,24 @@ var removeLabel = function(email, labelText) {
 }
 
 var selectAllEmails = function() {
-  $(.email-row input [type="checkbox"]).forEach(function(element) {
-    element.attr("checked", true)
-  }
+  $('.email-row input [type="checkbox"]').forEach(function(element) {
+    element.attr("checked", true);
+  });
 }
 
 var unSelectAllEmails = function() {
-  $(.email-row input [type="checkbox"]).forEach(function(element) {
-    element.removeAttr("checked")
-  }
+  $('.email-row input [type="checkbox"]').forEach(function(element) {
+    element.removeAttr("checked");
+  });
 }
 
 var multiSelectStateChange = function() {
-  if $(this).hasClass("fa-square-o") {
+  if ($(this).hasClass("fa-square-o")) {
     $(this).removeClass("fa-square-o");
     $(this).addClass("fa-check-square-o");
     selectAllEmails();
   } else {
-    if $(this).hasClass("fa-checked-o") {
+    if ($(this).hasClass("fa-checked-o")) {
       $(this).removeClass("fa-check-squore-o");
       $(this).addClass("fa-square-o");
       unSelectAllEmails();
@@ -111,15 +114,15 @@ var multiSelectStateChange = function() {
 }
 
 var enableButtons = function() {
-  $(.db).removeAttr("disabled");
+  $('.db').removeAttr("disabled");
 }
 
 var disableButtons = function() {
-  $(.db).attr("disabled", true);
+  $('.db').attr("disabled", true);
 }
 
 var selectEmailClick = function() {
-  if $(.email-row input [type="checkbox"]).attr("checked").length === 0 {
+  if ($('.email-row input [type="checkbox"]').attr("checked").length === 0) {
     disableButtons();
   } else {
     enableButtons();
@@ -139,11 +142,12 @@ var addLabelToMenu = function() {
 }
 
 $(document).ready(function() {
+  alert("the document is ready");
   $("checkbox").click(selectEmailClick);
   $(".subject").click(setRead());
   $(".mar").click(markAsRead());
   $(".mar").click(markAsUnRead());
   $(".deleteEmail").click(deleteEmail());
   $(".multiSelect").click(multiSelectStateChange());
-  $(".modal-save").clikc(addLabelToMenu();)
-  })
+  $(".modal-save").click(addLabelToMenu());
+});
