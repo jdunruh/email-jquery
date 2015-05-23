@@ -5,5 +5,7 @@
 .email-row p {margin-top: 7px;}
 .first-row {margin-top: 10px;}
 .menu-add {border-top:2px;}
-.selected {background-color: #FFFCCA;}
+/* order matters - selected must override unread */
 .unread {background-color: #EFEFEF;}
+.selected {background-color: #FFFCCA;}
+.read .subject {font-weight: bold;}
