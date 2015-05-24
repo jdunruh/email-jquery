@@ -145,11 +145,11 @@ var multiSelectStateChange = function() {
 }
 
 var enableButtons = function() {
-  $('.db').prop("disabled", false);
+  $('.db').removeClass("disabled");
 }
 
 var disableButtons = function() {
-  $('.db').prop("disabled", true);
+  $('.db').addClass("disabled");
 }
 
 var setButtonState = function() {
@@ -173,7 +173,8 @@ var insertLabelMenu = function(val) {
 }
 
 var addLabelToMenu = function() {
-  $(".modal-content input").value().insertLabelMenu(val);
+  alert("adding label to menu");
+  insertLabelMenu($(".modal-content input").val);
 }
 
 var toggleStar = function() {
