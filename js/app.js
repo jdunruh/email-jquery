@@ -77,22 +77,34 @@ var toggleStar = function(el) {
   }
 }
 
+var insertLabel = function(emailLine, labelText) {
+  var tags = $(emailLine).find('.email-label');
+  var labelString = '<span class="email-label">' + labelText + '</span>';
+    for(var i = 0; i < tags.length; i++) {
+      var tagElement = $(tags[i])
+      if(tagElement.text() === labelText)
+        return true;
+      if((tagElement.text() > labelText)) {
+        tagElement.before(labelString);
+        return true;
+      }
+    }
+  $(emailLine).find('.subject').before(labelString);
+  }
+
+
 var addLabelToEmail= function(labelText, email) {
-  email.parent().next().prepend('<span class="email-label">' + labelText + '</span>');
 }
 
-var addLabel = function(email, labelText) {
-  processCheckedEmail(function(el) {
-    addLabelToEmail(labelText, el);
+var addLabel = function() {
+  labelText = $(this).text();
+  $('.email-row :checked').closest('.email-row').find('.email-subject p').each(function(index, el) {
+    return insertLabel(el, labelText);
   });
 }
 
-var removeLabelFromEmail = function(labelText, email) {
-  email.parent().next().find(":contains(labelText)").remove();
-}
-
-var removeLabel = function(email, labelText) {
-  processCheckedEmail(function(el) {removeLabelFromEmail(labelText, el)});
+var removeLabel = function() {
+  $('.email-row :checked').closest('.email-row').find('.email-label:contains(' + $(this).text() + ')').remove();
 }
 
 var setTopBarState = function() {
@@ -168,7 +180,7 @@ var selectEmailClick = function() {
 // menu is a jquery object containing the menu, val is the string to insert into the menu
 var insertLabelMenu = function(menu, val) {
   var menuItems = menu.find('li');
-  var menuString = '<li><a role="menuitem" tabindex="-1" data-toggle="modal" data-target="#new-label-modal" href="#">' + val + '</a></li>';
+  var menuString = '<li><a class="add-label" role="menuitem" tabindex="-1" href="#">' + val + '</a></li>';
     for(var i = 0; i < menuItems.length; i++) {
       var menuElement = $(menuItems[i])
       if(menuElement.text() === val)
@@ -179,7 +191,6 @@ var insertLabelMenu = function(menu, val) {
       }
     }
   menu.append(menuString);
-  menu.find("dropdown-menu ul li").click(function() {addLabel(val)});
   }
 
 var addLabelToMenu = function(e) {
@@ -207,5 +218,7 @@ $(document).ready(function() {
   $(".multiSelect").click(multiSelectStateChange);
   $(".modal-save").click(addLabelToMenu);
   $(".star").click(toggleStar);
+  $(".add-menu").on("click", ".add-label", addLabel);
+  $(".remove-menu").on("click", removeLabel)
   setMultiSelectIcon();
 });
