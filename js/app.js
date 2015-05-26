@@ -18,7 +18,7 @@ var newEmail = function(index, subject) {
 // TODO - move click handlers for star and checkbox to outer wrapper and use bubbling
 
 var addEmail = function(index, subject) { // adds email at end of the email reader section
-  $(".first-row").append(newEmail(index, subject));
+  $(".email-list").append(newEmail(index, subject));
 }
 
 var addEmails = function(emailArray) { // add array of email objects
@@ -197,6 +197,7 @@ var insertLabelMenu = function(menu, val) {
 var addLabelToMenu = function() {
   insertLabelMenu($(".add-menu"), $(".modal-content input").val());
   insertLabelMenu($(".remove-menu"), $(".modal-content input").val());
+  $('.modal-content input').val("");
 }
 
 var toggleStar = function() {
@@ -212,7 +213,7 @@ var toggleStar = function() {
 var keypressModal = function(event) {
   if(event.which === 13) {
     addLabelToMenu();
-    $('.modal-content input').text("");
+    $('.modal-content input').val("");
     $('.modal').modal('hide');
   }
 }
