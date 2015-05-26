@@ -103,8 +103,9 @@ var addLabel = function() {
   });
 }
 
-var removeLabel = function() {
-  $('.email-row :checked').closest('.email-row').find('.email-label:contains(' + $(this).text() + ')').remove();
+var removeLabel = function(event) {
+  var labelText = $(event.target).text();
+  $('.email-row :checked').closest('.email-row').find('.email-label:contains(' + labelText + ')').remove();
 }
 
 var setTopBarState = function() {
