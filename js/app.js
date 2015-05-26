@@ -194,8 +194,7 @@ var insertLabelMenu = function(menu, val) {
   menu.append(menuString);
   }
 
-var addLabelToMenu = function(e) {
-  e.preventDefault();
+var addLabelToMenu = function() {
   insertLabelMenu($(".add-menu"), $(".modal-content input").val());
   insertLabelMenu($(".remove-menu"), $(".modal-content input").val());
 }
@@ -210,6 +209,14 @@ var toggleStar = function() {
   }
 }
 
+var keypressModal = function(event) {
+  if(event.which === 13) {
+    addLabelToMenu();
+    $('.modal-content input').text("");
+    $('.modal').modal('hide');
+  }
+}
+
 $(document).ready(function() {
   $(':checkbox').click(selectEmailClick);
   $(".subject").click(markAsRead);
@@ -220,6 +227,7 @@ $(document).ready(function() {
   $(".modal-save").click(addLabelToMenu);
   $(".star").click(toggleStar);
   $(".add-menu").on("click", ".add-label", addLabel);
-  $(".remove-menu").on("click", removeLabel)
+  $(".remove-menu").on("click", removeLabel);
+  $(".modal").keypress(keypressModal);
   setMultiSelectIcon();
 });
