@@ -9,29 +9,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
   <body>
-    <!-- code for add new label modal -->
-    <div class="modal fade new-label-modal" id="new-label-modal" tabindex="-1" role="dialog" aria-labelledby="myMediumModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-md">
-        <div class="modal-content">
-          <label>Enter New Label
-            <input type="text" name="new-label" value="">
-        </label>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary modal-save">Save changes</button>
+    <div class="container">
+      <!-- code for add new label modal -->
+      <div class="modal fade new-label-modal" id="new-label-modal" tabindex="-1" role="dialog" aria-labelledby="myMediumModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">New Label</h4>
+          </div>
+          <div class="modal-content">
+            <label>Enter New Label
+              <input type="text" name="new-label" value="">
+          </label>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary modal-save">Save changes</button>
+        </div>
       </div>
     </div>
-  </div>
-  <!-- endn modal -->
-    <div class="container">
+    <!-- end modal -->
       <div class="row">
         <div class="col-sm-12">
           <h1 class="text-center">Email Client</h1>
         </div>
       </div>
       <!-- buttons -->
-      <div class="row">
+      <div class="row nav">
         <ul class="nav nav-pills" role="tablist">
           <li role="presentation" class="btn-default multiSelect"><a href="#"><i class="fa fa-square-o fa-lg"></i></a></li>
           <li role="presentation" class="disabled btn-default db mar"><a href="#">Mark As Read</a></li>
@@ -39,12 +43,12 @@
           <li role="presentation" class="disabled btn-default db delete-email"><a href="#">Delete</a></li>
           <li role="presentation" class="disabled dropdown btn-default db">
             <a id="drop4" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">
-              Add Label
+              Apply Label
               <span class="caret"></span>
             </a>
-            <ul id="menu1" class="dropdown-menu" role="menu" aria-labelledby="drop4">
+            <ul id="menu1" class="dropdown-menu add-menu" role="menu" aria-labelledby="drop4">
               <li role="presentation" class="divider"></li>
-              <li role="presentation"><a role="menuitem" tabindex="-1" data-toggle="modal" data-target="#new-label-modal" href="https://twitter.com/fat">New Label</a></li>
+              <li role="presentation"><a role="menuitem" tabindex="-1" data-toggle="modal" data-target="#new-label-modal" href="https://twitter.com/fat">Create New...</a></li>
             </ul>
           </li>
           <li role="presentation" class="disabled dropdown btn-default db">
@@ -52,7 +56,7 @@
               Remove Label
               <span class="caret"></span>
             </a>
-            <ul id="menu2" class="dropdown-menu" role="menu" aria-labelledby="drop5">
+            <ul id="menu2" class="dropdown-menu remove-menu" role="menu" aria-labelledby="drop5">
             </ul>
           </li>
         </ul> <!-- /pills -->

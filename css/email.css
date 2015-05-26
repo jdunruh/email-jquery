@@ -9,3 +9,4 @@
 .unread {background-color: #EFEFEF;}
 .selected {background-color: #FFFCCA;}
 .read .subject {font-weight: bold;}
+.modal-content label {margin: 20px;}

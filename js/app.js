@@ -15,7 +15,7 @@ var newEmail = function(index, subject) {
   return emailHtml;
 }
 
-// TODO - add click handlers to star and checkbox
+// TODO - move click handlers for star and checkbox to outer wrapper and use bubbling
 
 var addEmail = function(index, subject) { // adds email at end of the email reader section
   $(".first-row").append(newEmail(index, subject));
@@ -55,7 +55,6 @@ var markAsUnRead = function() {
 }
 
 var deleteEmail = function() {
-  alert("in delete email")
   $('.email-row :checked').closest(".email-row").remove();
 }
 
@@ -165,16 +164,28 @@ var selectEmailClick = function() {
   setTopBarState();
 }
 
-var insertLabelMenu = function(val) {
-  $(".dropdown-menu ul").prepend('<li>' + val + '</li>');
-  $(".add-menu .dropdown-menu ul li").click(function() {addLabel(val)});
-  $(".remove-menu .dropdown-menu ul li").click(function() {removeLabel(val)});
 
-}
+// menu is a jquery object containing the menu, val is the string to insert into the menu
+var insertLabelMenu = function(menu, val) {
+  var menuItems = menu.find('li');
+  var menuString = '<li><a role="menuitem" tabindex="-1" data-toggle="modal" data-target="#new-label-modal" href="#">' + val + '</a></li>';
+    for(var i = 0; i < menuItems.length; i++) {
+      var menuElement = $(menuItems[i])
+      if(menuElement.text() === val)
+        return true;
+      if((menuElement.text() > val) || menuElement.hasClass('divider')) {
+        menuElement.before(menuString);
+        return true;
+      }
+    }
+  menu.append(menuString);
+  menu.find("dropdown-menu ul li").click(function() {addLabel(val)});
+  }
 
-var addLabelToMenu = function() {
-  alert("adding label to menu");
-  insertLabelMenu($(".modal-content input").val);
+var addLabelToMenu = function(e) {
+  e.preventDefault();
+  insertLabelMenu($(".add-menu"), $(".modal-content input").val());
+  insertLabelMenu($(".remove-menu"), $(".modal-content input").val());
 }
 
 var toggleStar = function() {
