@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="UTF-8">
     <title>gSchool email client - jQuery.js Version</title>
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
@@ -11,22 +12,20 @@
   <body>
     <div class="container">
       <!-- code for add new label modal -->
-      <div class="modal fade new-label-modal" id="new-label-modal" data-backdrop="true" tabindex="-1" role="dialog" aria-labelledby="myMediumModalLabel" aria-hidden="true">
+      <div class="modal fade" id="new-label-modal" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-md">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="myModalLabel">New Label</h4>
-          </div>
           <div class="modal-content">
-            <form>
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="my-modal-label">New Label</h4>
+            </div>
             <label>Enter New Label
               <input type="text" name="new-label" value="">
           </label>
-        </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default modal-dismiss" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary modal-save">Save changes</button>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default modal-dismiss" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary modal-save">Save changes</button>
+          </div>
         </div>
       </div>
     </div>
@@ -46,7 +45,7 @@
           <li role="presentation" class="dropdown">
             <button type="button" class="btn btn-default dropdown-toggle db" data-toggle="dropdown" aria-expanded="false" disabled>
               Apply Label<span class="caret"></span></button>
-            <ul id="menu1" class="dropdown-menu add-menu" role="menu" aria-labelledby="drop4">
+            <ul class="dropdown-menu add-menu" role="menu">
               <li role="presentation" class="divider"></li>
               <li role="presentation"><a class="add-new-label-to-menu" role="menuitem" tabindex="-1" data-toggle="modal" data-target="#new-label-modal" href="#">Create New...</a></li>
             </ul>
@@ -54,7 +53,7 @@
           <li role="presentation" class="dropdown btn-default">
             <button type="button" class="btn btn-default dropdown-toggle db" data-toggle="dropdown" aria-expanded="false" disabled>
               Remove Label<span class="caret"></span></button>
-            <ul id="menu2" class="dropdown-menu remove-menu" role="menu" aria-labelledby="drop5">
+            <ul class="dropdown-menu remove-menu" role="menu">
             </ul>
           </li>
         </ul> <!-- /pills -->

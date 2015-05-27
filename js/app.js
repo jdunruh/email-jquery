@@ -34,11 +34,6 @@ var setRead = function(index, email) {
   }
 }
 
-// find checked email and run setFunc ov each
-// setFunc must take 2 args - index of item and element
-var processCheckedEmail = function(setFunc) {
-  $('.email-row :checked').closest(".email-row").each(setFunc);
-}
 
 var markAsRead = function() {
   // must save initial selection as second line won't match aftre .unread is removed
@@ -91,10 +86,6 @@ var insertLabel = function(emailLine, labelText) {
     }
   $(emailLine).find('.subject').before(labelString);
   }
-
-
-var addLabelToEmail= function(labelText, email) {
-}
 
 var addLabel = function() {
   labelText = $(this).text();
