@@ -1,29 +1,33 @@
 
-var newEmail = function(index, subject) {
+var newEmail = function(index, subject, read, starred) {
+  var readClass = read ? "read" : "unread";
+  var starClass = starred ? "fa-star" : "fa-star-o";
   var emailHtml =
-    '<div class="row email-row unread">\
-      <div class="col-sm-1 email-subject">\
-        <p>\
-          <input type="checkbox" name="message-' + index + '">\
-          <i class="star fa fa-star-o fa-lg"></i>\
-        </p>\
-      </div>\
-    <div class="col-sm-11">\
-      <p><span class="subject">' + subject.substring(0, 49) + '<span></p>\
+  '<div class="row email-row ' + readClass + '">\
+    <div class="col-sm-1">\
+      <p>\
+      <input type="checkbox" name="message-' + index + '">\
+      <i class="star fa ' + starClass + ' fa-lg"></i>\
+      </p>\
     </div>\
-    </div>';
+    <div class="col-sm-11 email-subject">\
+      <p><span class="subject">'+ subject.substring(0, 49) + '</span></p>\
+    </div>\
+  </div>'
   return emailHtml;
 }
 
+
+
 // TODO - move click handlers for star and checkbox to outer wrapper and use bubbling
 
-var addEmail = function(index, subject) { // adds email at end of the email reader section
-  $(".email-list").append(newEmail(index, subject));
+var addEmail = function(index, subject, read, starred) { // adds email at end of the email reader section
+  $(".email-list").append(newEmail(index, subject, read, starred));
 }
 
-var addEmails = function(emailArray) { // add array of email objects
-  emailArray.forEach(function(el) {
-    addEmail(el.index, el.subject);
+var addEmails = function(emailResponse) { // add array of email objects
+  emailResponse.emails.forEach(function(el) {
+    addEmail(el.index, el.subject, el.read, el.starred);
   })
 }
 
@@ -163,7 +167,7 @@ var setButtonState = function() {
   }
 }
 
-var selectEmailClick = function() {
+var selectEmailClick = function(event) {
   sessionStorage.setItem('email-jquery:' + $(this).attr('name'), $(this).prop('checked'));
   $(this).closest(".email-row").toggleClass("selected");
   setTopBarState();
@@ -228,8 +232,19 @@ var restoreState = function() {
   }});
 }
 
+var requestEmail = function() {
+  $.ajax( "http://localhost:3000/mail" )
+  .done(function(data) {
+    addEmails( data );
+  })
+  .fail(function() {
+    alert( "could not connect to server" );
+  });
+}
+
 $(document).ready(function() {
-  $(':checkbox').click(selectEmailClick);
+  requestEmail();
+  $('.email-list').on('click', ":checkbox",selectEmailClick);
   $('.subject').click(markAsRead);
   $(".mar").click(markAsRead);
   $(".mau").click(markAsUnRead);
@@ -237,7 +252,7 @@ $(document).ready(function() {
   $(".multi-select").click(multiSelectStateChange);
   $(".modal-save").click(modalDefault);
   $('.modal-dismiss').click(function() { $('.modal-content input').val(""); });
-  $(".star").click(toggleStar);
+  $(".email-list").on("click", ".star", toggleStar);
   $(".add-menu").on("click", ".add-label", addLabel);
   $(".remove-menu").on("click", removeLabel);
   $('.modal').keypress(keypressModal);
