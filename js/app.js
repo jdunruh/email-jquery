@@ -164,6 +164,7 @@ var setButtonState = function() {
 }
 
 var selectEmailClick = function() {
+  sessionStorage.setItem('email-jquery:' + $(this).attr('name'), $(this).prop('checked'));
   $(this).closest(".email-row").toggleClass("selected");
   setTopBarState();
 }
@@ -219,6 +220,14 @@ var modalFocus = function() {
   $('.modal-content input').focus();
 }
 
+var restoreState = function() {
+  var chk = false;
+  $(':checkbox').each(function(index, el) {
+  if(chk = sessionStorage.getItem('email-jquery:' + $(el).attr('name'))) {
+    $(el).prop('checked', (chk === "true"));
+  }});
+}
+
 $(document).ready(function() {
   $(':checkbox').click(selectEmailClick);
   $('.subject').click(markAsRead);
@@ -233,5 +242,6 @@ $(document).ready(function() {
   $(".remove-menu").on("click", removeLabel);
   $('.modal').keypress(keypressModal);
   $('.modal').on('shown.bs.modal', modalFocus);
+  restoreState();
   setMultiSelectIcon();
 });
