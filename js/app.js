@@ -136,7 +136,7 @@ var multiSelectIcon = function() { // return correct icon value for multiSelect
 }
 
 var setMultiSelectIcon = function() {
-  var msi = $(".multiSelect i");
+  var msi = $(".multi-select i");
   $(msi).removeClass("fa-minus-square-o");
   $(msi).removeClass("fa-check-square-o");
   $(msi).removeClass("fa-square-o");
@@ -157,11 +157,11 @@ var multiSelectStateChange = function() {
 }
 
 var enableButtons = function() {
-  $('.db').removeClass("disabled");
+  $('.db').prop("disabled", false);
 }
 
 var disableButtons = function() {
-  $('.db').addClass("disabled");
+  $('.db').prop("disabled", true);
 }
 
 var setButtonState = function() {
@@ -195,9 +195,11 @@ var insertLabelMenu = function(menu, val) {
   }
 
 var addLabelToMenu = function() {
-  insertLabelMenu($(".add-menu"), $(".modal-content input").val());
-  insertLabelMenu($(".remove-menu"), $(".modal-content input").val());
-  $('.modal-content input').val("");
+  if($('.modal-content input').val() != "") {
+    insertLabelMenu($(".add-menu"), $(".modal-content input").val());
+    insertLabelMenu($(".remove-menu"), $(".modal-content input").val());
+    $('.modal-content input').val("");
+  }
 }
 
 var toggleStar = function() {
@@ -212,23 +214,33 @@ var toggleStar = function() {
 
 var keypressModal = function(event) {
   if(event.which === 13) {
-    addLabelToMenu();
-    $('.modal-content input').val("");
-    $('.modal').modal('hide');
+    modalDefault();
   }
+}
+
+var modalDefault = function() {
+  addLabelToMenu();
+  $('.modal-content input').val("");
+  $('.modal').modal('hide');
+}
+
+var modalFocus = function() {
+  $('.modal-content input').focus();
 }
 
 $(document).ready(function() {
   $(':checkbox').click(selectEmailClick);
-  $(".subject").click(markAsRead);
+  $('.subject').click(markAsRead);
   $(".mar").click(markAsRead);
   $(".mau").click(markAsUnRead);
   $(".delete-email").click(deleteEmail);
-  $(".multiSelect").click(multiSelectStateChange);
-  $(".modal-save").click(addLabelToMenu);
+  $(".multi-select").click(multiSelectStateChange);
+  $(".modal-save").click(modalDefault);
+  $('.modal-dismiss').click(function() { $('.modal-content input').val(""); });
   $(".star").click(toggleStar);
   $(".add-menu").on("click", ".add-label", addLabel);
   $(".remove-menu").on("click", removeLabel);
-  $(".modal").keypress(keypressModal);
+  $('.modal').keypress(keypressModal);
+  $('.modal').on('shown.bs.modal', modalFocus);
   setMultiSelectIcon();
 });

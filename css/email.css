@@ -3,7 +3,7 @@
    min-height: 35px;   /* Set to height you need */
 }
 .email-row p {margin-top: 7px;}
-.first-row {margin-top: 10px;}
+.email-list {margin-top: 10px;}
 .menu-add {border-top:2px;}
 /* order matters - selected must override unread */
 .unread {background-color: #EFEFEF;}
