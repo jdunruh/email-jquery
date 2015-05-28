@@ -233,7 +233,7 @@ var restoreState = function() {
 }
 
 var requestEmail = function() {
-  $.ajax( "http://localhost:3000/mail" )
+  $.ajax( window.location.origin + "/mail" )
   .done(function(data) {
     addEmails( data );
   })
