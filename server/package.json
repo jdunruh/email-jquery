@@ -1,0 +1,24 @@
+{
+  "name": "email-node",
+  "version": "0.0.1",
+  "description": "email server supportinng javascript front end framework exploration",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node --harmony server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jdunruh/email-node.git"
+  },
+  "author": "John Unruh",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jdunruh/email-node/issues"
+  },
+  "homepage": "https://github.com/jdunruh/email-node",
+  "dependencies": {
+    "express": "^4.12.4",
+    "morgan": "^1.5.3"
+  }
+}
