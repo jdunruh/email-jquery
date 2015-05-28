@@ -17,17 +17,18 @@ var newEmail = function(index, subject, read, starred) {
   return emailHtml;
 }
 
-
-
-// TODO - move click handlers for star and checkbox to outer wrapper and use bubbling
-
-var addEmail = function(index, subject, read, starred) { // adds email at end of the email reader section
-  $(".email-list").append(newEmail(index, subject, read, starred));
+var addEmail = function(index, subject, read, starred, labels) { // adds email at end of the email reader section
+  var appended = $(".email-list").append(newEmail(index, subject, read, starred));
+  labels.forEach(function(label) {
+    insertLabel(appended.find('.email-row:last-child'), label);
+    insertLabelMenu($(".add-menu"), label);
+    insertLabelMenu($(".remove-menu"), label);
+  })
 }
 
 var addEmails = function(emailResponse) { // add array of email objects
   emailResponse.emails.forEach(function(el) {
-    addEmail(el.index, el.subject, el.read, el.starred);
+    addEmail(el.index, el.subject, el.read, el.starred, el.labels);
   })
 }
 
