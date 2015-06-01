@@ -234,7 +234,7 @@ var restoreState = function() {
 }
 
 var requestEmail = function() {
-  $.ajax( window.location.origin + "/mail" )
+  $.ajax( window.location.origin + "/messages" )
   .done(function(data) {
     addEmails( data );
   })
