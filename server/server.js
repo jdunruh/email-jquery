@@ -59,7 +59,7 @@ var updateEmailsInDB = function (req, res) {
 var updateLabelsInDB = function (req, res, method) {
     console.log(req.body);
     var Email = mongoose.model('Email', emailSchema);
-    var query = (method === "addLabel") ? {$addToSet: {labels: req.body.labels}}: {$pullAll: {labels: req.body.labels}};
+    var query = (method === "addLabel") ? {$addToSet: {labels: {$each: req.body.labels}}} : {$pullAll: {labels: req.body.labels}};
     console.log(query)
     Email.update({"_id": {$in: req.body.ids}}, query, {multi: true}, function (err, raw) {
         if(err) {
@@ -123,7 +123,7 @@ var addEmailToDB = function (req, res) {
 var retrieveAllEmail = function (req, res) {
     var Email = mongoose.model('Email', emailSchema);
 
-    Email.find({}, function (err, result) {
+    Email.find({}, null, { sort: { _id: 1 } }, function (err, result) {
          if(err) {
             res.status(404).json(err);
         } else {

@@ -69,16 +69,6 @@ var deleteEmail = function () {
 };
 
 
-//var toggleStar = function (el) {
-//    if (el.hasClass("fa-star-o")) {
-//        el.removeClass("fa-star-o");
-//        el.addClass("fa-star");
-//    } else {
-//        el.removeClass("fa-star");
-//        el.addClass("fa-star-o");
-//    }
-//};
-
 var insertLabel = function (emailLine, labelText) {
     var tags = $(emailLine).find('.email-label');
     var labelString = '<span class="email-label">' + labelText + '</span>';
@@ -95,39 +85,19 @@ var insertLabel = function (emailLine, labelText) {
     $(emailLine).find('.subject').before(labelString);
 };
 
-var insertAndSaveLabel = function(emailLine, labelText) {
-    var tags = $(emailLine).find('.email-label');
-
-    // pull out the tags and send it to the server
-    var taglist = {labels:[]};
-    $(emailLine).find('.email-label').each(function(index, el) {
-        taglist.labels[index] = $(this).text();
-    });
-    // the reduce expression tests membership of labelText in taglist.labels. Like .find() in ES6
-    if(!taglist.labels.reduce(function(acc, el) { return acc || (el === labelText) }, false)) {
-        taglist.labels.push(labelText); // must add the new label - it is not yet in the DOM
-        taglist.ids = getNames($(emailLine).closest('.email-row'));
-        sendEmailChanges(taglist, function () {
-            insertLabel(emailLine, labelText)
-        });
-    }
-}
-
-//var addLabel = function () {
-//    labelText = $(this).text();
-//    $('.email-row :checked').closest('.email-row').find('.email-subject p').each(function (index, el) {
-//        return insertAndSaveLabel(el, labelText);
-//    });
-//};
-
 var addLabel = function () {
     var labelText = $(this).text();
-    $('.email-row :checked').closest('.email-row').each(function(index, row) {
-        var labels = addLabelToArray(getLabelArrayFromRow(row), labelText);
-        clearLabelsFromRow(row);
-        insertLabelsInRow(labels, row)
+    $('.email-row :checked').closest('.email-row').each(function (index, row) {
+        var transaction = {ids: getNames(row),
+            labels:  [labelText]};
+
+        sendAddLabel(transaction, function () {
+            var labels = addLabelToArray(getLabelArrayFromRow(row), labelText);
+            clearLabelsFromRow(row);
+            insertLabelsInRow(labels, row)
+        });
     });
-};
+}
 
 
 var getLabelArrayFromRow = function(row) {
