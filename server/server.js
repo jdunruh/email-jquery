@@ -1,42 +1,21 @@
 #!/usr/bin/env node --harmony
+
+
+// API Definition
+// get /messages - gets all messages on server
+// get /messages/:id - gets messages newer than :id
+// put /messages  {starred: [true|false], read: [true|false], labels: ["array", "of", "strings"]}
+// delete /messages {ids: [array, of, ids] } - delete the emails identified in ids from database
+// patch /messages {ids: [array, of, ids], starred]true|false\, read: [true|false] } set starred or read (if they are in the object) in the DB
+// patch /messages/addLabel {ids: [array, of, ids], label: "label"} - add "label" to ids
+// patch /messages/removeLabel {ids: [array, of, ids], label: "label"} - remove "label" from ids
+
 'use strict';
 const
     express = require('express'),
     app = express(),
     dbProps = ["subject", "read", "starred", "labels"],
-    dbUpdateableProps = ["read", "starred", "labels"],
-    emailDB = {
-        emails: [
-            {
-                id: 0,
-                subject: "This is the first email",
-                read: false,
-                starred: false,
-                labels: ["red", "yellow"]
-            },
-            {
-                id: 5,
-                subject: "This is a Spear Phishing Attack",
-                read: false,
-                starred: false,
-                labels: ["yellow", "blue"]
-            },
-            {
-                id: 7,
-                subject: "Buy Some Viagra",
-                read: false,
-                starred: true,
-                labels: []
-            },
-            {
-                id: 8,
-                subject: "Help me get my inheritance",
-                read: true,
-                starred: true,
-                labels: ["important"]
-            }
-        ]
-    };
+    dbUpdateableProps = ["read", "starred"];
 
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
@@ -57,26 +36,6 @@ var emailSchema = new Schema({
 });
 
 
-var updateEmailInDB = function (req, res) {
-    console.log(req.body);
-    var updateProperties = {};
-    var Email = mongoose.model('Email', emailSchema);
-
-    Object.keys(req.body).forEach(function (propKey) {
-        // make sure evildoer doesn't add illegal properties by sending them up in the JSON
-        if (dbUpdateableProps.indexOf(propKey) > -1) {
-            updateProperties[propKey] = req.body[propKey];
-        }
-    });
-    console.log(updateProperties)
-    Email.update({"_id": req.body._id}, updateProperties, function (res) {
-        if(err) {
-            res.status(404).json({error: err, rawError: rawerror})
-        } else {
-            res.status(200).json({})}
-    })
-};
-
 var updateEmailsInDB = function (req, res) {
     console.log(req.body);
     var updateProperties = {};
@@ -89,12 +48,25 @@ var updateEmailsInDB = function (req, res) {
         }
     });
     console.log(updateProperties);
-    Email.update({"_id": {$in: req.body.ids}}, updateProperties, {multi: true}, function (err) {
+    Email.update({"_id": {$in: req.body.ids}}, {$set: updateProperties}, {multi: true}, function (err) {
         if(err) {
             res.status(404).json(err)
         } else {
             res.status(200).json({})}
     })
+};
+
+var updateLabelsInDB = function (req, res, method) {
+    console.log(req.body);
+    var Email = mongoose.model('Email', emailSchema);
+    var query = (method === "addLabel") ? {$addToSet: {labels: req.body.labels}}: {$pullAll: {labels: req.body.labels}};
+    console.log(query)
+    Email.update({"_id": {$in: req.body.ids}}, query, {multi: true}, function (err, raw) {
+        if(err) {
+            res.status(404).json(raw)
+        } else {
+            res.status(200).json({})}
+    });
 };
 
 
@@ -184,6 +156,11 @@ app.get('/messages/:lastId', function (req, res) {
 app.patch('/messages', function (req, res) {
     updateEmailsInDB(req, res);
 });
+
+app.patch('/messages/:labelMethod', function(req, res) {
+    updateLabelsInDB(req, res, req.params.labelMethod);
+});
+
 
 app.delete('/messages', function(req, res) {
     removeEmailsFromDB(req, res, req.body.ids)
