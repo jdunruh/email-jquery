@@ -23,7 +23,7 @@ var addEmail = function (index, subject, read, starred, labels) { // adds email 
         insertLabelMenu($(".add-menu"), label);
         insertLabelMenu($(".remove-menu"), label);
     })
-}
+};
 
 var addEmails = function (emailResponse) { // add array of email objects
     emailResponse.forEach(function (el) {
