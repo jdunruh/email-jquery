@@ -276,13 +276,20 @@ var restoreState = function () {
 };
 
 var requestEmail = function () {
-    $.ajax(window.location.origin + "/messages")
+    var rows = $('.email-row');
+    var url = window.location.origin + "/messages";
+    if(rows.length > 0) {
+        var latest = getNames(rows).sort()[rows.length - 1];
+        url += "/" + latest;
+    }
+    $.ajax(url)
         .then(function (data) {
             console.log("about to add emails");
             console.log(data);
             addEmails(data);
             restoreState();
             setTopBarState();
+            window.setTimeout(function() {requestEmail()},3000); // look for more email every three seconds
         })
         .fail(function () {
             alert("could not connect to server");
@@ -340,10 +347,7 @@ var sendAddLabel = function(update, updateDOMFunction) {
 
 };
 
-// request additional emails
-var requestMoreEmail = function() {
-    $.ajax();
-};
+
 
 // send delete requests to the email database
 var sendEmailDeletes = function(deleteObject, updateDOMFunction) {
@@ -353,11 +357,6 @@ var sendEmailDeletes = function(deleteObject, updateDOMFunction) {
         method: 'DELETE',
         data: JSON.stringify(deleteObject)
     };
-    console.log("in sendEmailUpdates");
-    console.log('deleteObject');
-    console.log(deleteObject);
-    conlole.log("ajaxOption");
-    console.log(ajaxOption);
     $.ajax(ajaxOption)
         .then(updateDOMFunction)
         .fail(function () {
