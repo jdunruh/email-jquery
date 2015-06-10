@@ -25,7 +25,10 @@ app.use(morgan('dev'));
 app.use(express.static('..'));
 var Schema = mongoose.Schema;
 
-mongoose.connect('localhost', 'email');
+var mongoURL = process.env.MONGOLAB_URI || 'localhost';
+
+
+mongoose.connect(mongoURL, 'email');
 
 
 var emailSchema = new Schema({
