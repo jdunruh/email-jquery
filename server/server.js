@@ -22,7 +22,7 @@ var morgan = require('morgan');
 var mongoose = require('mongoose');
 app.use(bodyParser.json());
 app.use(morgan('dev'));
-app.use(express.static('..'));
+app.use(express.static('resources/public'));
 var Schema = mongoose.Schema;
 
 var mongoURL = process.env.MONGOLAB_URI || 'localhost';

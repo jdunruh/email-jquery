@@ -1,0 +1,12 @@
+.email-label {background-color: #EBAF48;padding-left: 7px; padding-right: 7px; margin-right: 10px;}
+.email-row {
+   min-height: 35px;   /* Set to height you need */
+}
+.email-row p {margin-top: 7px;}
+.email-list {margin-top: 10px;}
+.menu-add {border-top:2px;}
+/* order matters - selected must override unread */
+.unread {background-color: #EFEFEF;}
+.selected {background-color: #FFFCCA;}
+.read .subject {font-weight: bold;}
+.modal-content label {margin: 20px;}

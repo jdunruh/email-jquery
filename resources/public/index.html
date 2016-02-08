@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>gSchool email client - jQuery.js Version</title>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="stylesheets/email.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body>
+    <div class="container">
+      <!-- code for add new label modal -->
+      <div class="modal fade" id="new-label-modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-md">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="my-modal-label">New Label</h4>
+            </div>
+            <label>Enter New Label
+              <input type="text" name="new-label" value="">
+          </label>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default modal-dismiss" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary modal-save">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end modal -->
+      <div class="row">
+        <div class="col-sm-12">
+          <h1 class="text-center">Email Client</h1>
+        </div>
+      </div>
+      <!-- buttons -->
+      <div class="row nav">
+        <ul class="nav nav-pills" role="tablist">
+          <li role="presentation" class="multi-select"><button class="btn btn-default"><i class="fa fa-square-o fa-lg"></i></button></li>
+          <li role="presentation"><button class="btn btn-default db mar" disabled>Mark As Read</button></li>
+          <li role="presentation"><button class="btn btn-default db mau" disabled>Mark As Unread</button></li>
+          <li role="presentation"><button class="btn btn-default db delete-email" disabled>Delete</button></li>
+          <li role="presentation" class="dropdown">
+            <button type="button" class="btn btn-default dropdown-toggle db" data-toggle="dropdown" aria-expanded="false" disabled>
+              Apply Label<span class="caret"></span></button>
+            <ul class="dropdown-menu add-menu" role="menu">
+              <li role="presentation" class="divider"></li>
+              <li role="presentation"><a class="add-new-label-to-menu" role="menuitem" tabindex="-1" data-toggle="modal" data-target="#new-label-modal" href="#">Create New...</a></li>
+            </ul>
+          </li>
+          <li role="presentation" class="dropdown btn-default">
+            <button type="button" class="btn btn-default dropdown-toggle db" data-toggle="dropdown" aria-expanded="false" disabled>
+              Remove Label<span class="caret"></span></button>
+            <ul class="dropdown-menu remove-menu" role="menu">
+            </ul>
+          </li>
+        </ul> <!-- /pills -->
+      </div>
+    <!-- end buttons -->
+    <!-- email list -->
+    <div class="email-list">
+    </div>
+  <!-- end email list -->
+</div>
+    <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="javascript/app.js"></script>
+  </body>
+</html>
