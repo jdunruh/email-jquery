@@ -26,7 +26,7 @@ app.use(express.static('resources/public'));
 var Schema = mongoose.Schema;
 
 var mongoURL = process.env.MONGOLAB_URI || 'localhost';
-var port = porcess.env.PORT || 3000;
+var port = process.env.PORT || 3000;
 
 
 mongoose.connect(mongoURL);
