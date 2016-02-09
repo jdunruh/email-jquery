@@ -178,6 +178,6 @@ app.put('/messages', function (req, res) {
     addEmailToDB(req, res)
 });
 
-app.listen(3000, function () {
+app.listen(port, function () {
     console.log("server up")
 });
