@@ -28,7 +28,7 @@ var Schema = mongoose.Schema;
 var mongoURL = process.env.MONGOLAB_URI || 'localhost';
 
 
-mongoose.connect(mongoURL, 'email');
+mongoose.connect(mongoURL);
 
 
 var emailSchema = new Schema({
